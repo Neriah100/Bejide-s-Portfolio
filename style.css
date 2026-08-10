@@ -1,0 +1,543 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Segoe UI", system-ui, sans-serif;
+    line-height: 1.6;
+    background: #c1b4a9;;
+    margin: 0 auto; /* <-- ADD THIS LINE to center the entire site */
+}
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Keeps the header on top of other content */
+  /*background-color: #ffffff; /* Gives it a solid background so text underneath doesn't show through */
+  background: linear-gradient(to right, #24110a, #3a1d12, #5a311b);
+  border-bottom: 1px solid rgba(61, 54, 45, 0); /* 10% opacity black */;  
+}
+.nav-inner {
+     display: flex;
+     align-items: center;
+    justify-content: space-between; /* This forces logo to the left, links to the right */
+    width: 100%;
+   padding: 15px 4%; /* Adjust spacing around your navbar edges */
+}
+.logo img {
+    width: 100px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 1.5rem;
+}
+.nav-links a {
+    color: #fffcf9;
+    font-size: 0.95rem;
+    transition: color 0.2s ease;
+}
+.nav-links a:hover,
+.nav-links a:focus-visible {
+    color:  #f4a963;;
+}
+/* Hamburger button - hidden on desktop, shown on mobile */
+/* style the button container*/
+.nav-toggle {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 20px;
+    width: 30px;
+}
+/*Style the three spans into horizontal lines*/
+.nav-toggle span {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background-color: #fcfafa;
+    transition: all 0.4s ease-in-out;/* Crucial for smooth animation */
+    transform-origin: left center;    /* Keeps rotation aligned properly */
+}
+/* When the menu button is open (aria-expanded="true") */
+.nav-toggle[aria-expanded="true"] span:nth-child(1) {
+  transform: rotate(45deg); /* Top line tilts down */
+}
+.nav-toggle[aria-expanded="true"] span:nth-child(2) {
+  width: 0%;                /* Middle line disappears */
+  opacity: 0;
+}
+.nav-toggle[aria-expanded="true"] span:nth-child(3) {
+  transform: rotate(-45deg); /* Bottom line tilts up */
+}
+/* --- SMOOTH SLIDE-DOWN MENU ANIMATION --- */
+.nav-links {
+ /* Animation properties */
+    max-height: 0;/*start at zero height*/
+    /*overflow: hidden; /*Hide contents while closed*/
+    opacity: 0;/* Fade Out*/
+    transition: max-height 0.5s ease-out, opacity 0.6s ease-out;    
+}
+/* When the active class is added, smoothly animate open */
+.nav-links.active {
+    max-height: 300px;
+     opacity: 1;
+    padding: 20px; 
+}
+/* Hide hamburger icon on desktop screens by default */
+@media(min-width: 769px) {
+   .nav-toggle { 
+      display: none;
+   } 
+   /* Force the menu to always show horizontally on desktop */
+  .nav-links {
+    display: flex !important; /* Overrides the mobile display: none */
+    flex-direction: row;
+    position: static; /* Removes mobile absolute positioning */
+    max-height: none !important;    /* Undo mobile height restriction */
+    opacity: 1  !important;          /* Undo mobile fade out */
+    overflow: visible;
+    padding: 0;
+    margin-left: auto;
+  }   
+}
+@media (max-width: 768px) {
+    .nav-links {
+    flex-direction: column;
+    position: absolute; 
+    top: 60px;  /* Adjust based on your header height */
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    padding: 20px;
+    overflow: hidden;
+   }
+  
+  /* Ensure hamburger is visible on mobile */
+   .nav-toggle {
+      display: flex;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 20px;
+      width: 30px;
+   }
+   .nav-links a {
+    color: #2a2222;
+     }
+}  
+/* Base Section setup */
+.hero-section {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 2rem;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  background: linear-gradient(to right, #24110a, #3a1d12, #5a311b);
+  position: relative;
+  border: none;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: 0 0 12px 1px rgba(90, 49, 27, 0.25);
+}
+/* Text Container */
+.hero-text-content {
+  z-index: 2; /* Ensures text floats crisply above everything else */
+}
+.intro-greeting {
+  font-family: inherit;
+  font-size: 1.2rem;
+  color: #c1b4a9; /* Soft muted beige */
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+/* Main Heading Configuration */
+.hero-text-content h1 {
+  margin: 0 0 1.5rem 0;
+  line-height: 0.95;
+  display: flex;
+  flex-direction: column;
+}
+/* Aggressive, editorial font sizing scale */
+.first-name {
+  font-size: clamp(3.5rem, 8vw + 1rem, 6.5rem);
+  font-weight: 800;
+  color: #f4efea; /* Premium Off-White */
+  letter-spacing: -0.03em;
+}
+
+.last-name {
+  font-size: clamp(2.5rem, 5vw + 1rem, 4.5rem);
+  font-weight: 400;
+  color: #c1b4a9; /* Slightly darker shade to give visual break */
+  letter-spacing: -0.02em;
+  margin-top: 0.2rem;
+  text-align: right;
+}
+/* Enhancing the Bio Subtext layout */
+.bio-text {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: #c1b4a9;
+  max-width: 480px; /* Limits paragraph width to prevent long, ugly lines */
+  margin-bottom: 2rem;
+}
+/* Elegant Call To Action */
+.btn {
+  display: inline-block;
+  color: #e2a062; /* Rich accent amber */
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  padding-bottom: 4px;
+  transition: all 0.3s ease 
+ }
+ .btn:hover {
+  border-bottom-color: #e2a062;
+  letter-spacing: 0.5px; /* Subtle fluid animation hint */
+}
+/* --- The Image & Shadow Container Setup --- */
+.image-box-container {
+  justify-self: end;
+  position: relative;
+  display: inline-block;
+  border-radius: 50%;
+
+    /* Layered realistic shadow that softens the brown edge blending */
+  box-shadow: 
+    0 10px 20px rgba(0, 0, 0, 0.15),
+    0 25px 50px rgba(0, 0, 0, 0.25);
+}
+.image-box-container img {
+  width: clamp(280px, 35vw, 460px); /* Makes the image size perfectly fluid */
+  height: clamp(280px, 35vw, 460px);
+  object-fit: cover;
+  display: block;
+  
+  /* Shaves off the baked-in brown outer band dynamically */
+  clip-path: circle(44.5% at 50% 50%);
+}
+/* Responsive Overhaul for Mobile and Tablets */
+@media (max-width: 900px) {
+  .hero-section {
+    grid-template-columns: 1fr; /* Switch to a vertical stack */
+    text-align: center;
+    gap: 3rem;
+  }
+  .hero-text-content {
+    order: 2; /* Puts text underneath image on mobile */
+  }
+  .image-box-container {
+    grid-area: auto;
+    justify-self: center;
+    order: 1;
+  }
+   .bio-text {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .last-name {
+    text-align: center;
+  }
+}
+.image-box-container img {
+  filter: sepia(0.6) hue-rotate(180deg) opacity(0.8);
+}
+
+
+.project-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  padding: 2rem;
+  background:  #ece1d7;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+.project-section h2 {
+    font-size: 3rem;
+    color:  #3a1d12;
+    margin-bottom: 2.5rem; 
+}
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 24px;
+    width: 100%;
+    max-width: 1200px;
+}
+.project-card {
+    background: #ede9e9;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: transform 0.2s ease;
+}
+.project-card:hover {
+    transform: translateY(-4px);
+}
+.project-thumb {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+.project-body {
+    padding: 16px 16px 16px;
+}
+.project-body h3 {
+    font-size: 1.3rem;
+    margin: 0 0 8px;
+    color: #1a1a1a;
+}
+.project-body p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #444;
+    margin: 0;
+}
+.tech-tags {
+    padding: 0 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 12px 0;
+}
+.project-role {
+    padding: 0 16px;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #333;
+    margin: 8px 0;
+}
+.project-links {
+    padding: 0 16px 16px;
+    display: flex;
+    gap: 14px;
+    margin-top: 8px;
+}
+@media (max-width: 768px) {
+    .project-section {
+        padding: 2rem 1rem;
+    }
+
+    .project-section h2 {
+        font-size: 2.2rem;
+    }
+
+    .project-grid {
+        grid-template-columns: 1fr; /* single column on small screens */
+        gap: 20px;
+    }
+
+    .project-thumb {
+        height: 200px; /* slightly taller since card is now full-width */
+    }
+
+    .project-body h3 {
+        font-size: 1.15rem;
+    }
+
+    .project-body p,
+    .project-role {
+        font-size: 0.85rem;
+    }
+
+    .tech-tags img {
+        height: 22px; /* shields.io badges can look oversized on small screens */
+    }
+
+    .project-links {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+}
+.card-link {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #5a311b;
+    text-decoration: none;
+}
+.card-link:hover {
+    text-decoration: underline;
+}
+.skills-section {
+    padding: 4rem 2rem;
+    text-align: center;
+    background: linear-gradient( #5a311b, #3a1d12);
+}
+.skills-section h2 {
+    font-size: 2.5rem;
+    color: #f4efea;
+    margin-bottom: 2.5rem;
+    letter-spacing: 0.5px;
+}
+.skill-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 20px;
+    max-width: 750px;
+    margin: 0 auto;
+}
+.skill-card {
+    background: rgba(244,239,234,0.06);
+    border: 1px solid rgba(244,239,234,0.15);
+    border-radius: 14px;
+    padding: 24px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    -webkit-backdrop-filter: blur(4px); 
+    backdrop-filter: blur(4px); 
+    transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.skill-card:hover {
+    transform: translateY(-6px);
+    background: rgba(244,239,234,0.12);
+    border-color: rgba(244,239,234,0.35);
+}
+.skill-card img {
+    width: 42px;
+    height: 42px;
+}
+.skill-card span {
+    font-size: 0.95rem;
+    color: #f4efea;
+    font-weight: 500;
+    letter-spacing: 0.2px
+}
+.contact-section {
+  padding: 5rem 2rem;
+  text-align: center;
+  background: #f4efea;
+}
+
+.contact-section h2 {
+  font-size: 2.75rem;
+  color: #3a1d12;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.contact-intro {
+  font-size: 1.1rem;
+  color: #5a4a42;
+  max-width: 480px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.6;
+}
+
+.contact-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.contact-link {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  background: #ede9e9;
+  border: 1px solid rgba(58, 29, 18, 0.1);
+  border-radius: 14px;
+  padding: 20px 28px;
+  min-width: 220px;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.contact-link:hover {
+  transform: translateY(-4px);
+  border-color: #e2a062;
+  box-shadow: 0 8px 20px rgba(90, 49, 27, 0.12);
+}
+
+.contact-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #e2a062;
+}
+
+.contact-value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #3a1d12;
+}
+
+.footer {
+  text-align: center;
+  padding: 1.5rem;
+  background: #24110a;
+  color: #c1b4a9;
+  font-size: 0.85rem;
+}
+.contact-icon {
+  width: 28px;
+  height: 28px;
+  margin-bottom: 6px;
+}
+@media (max-width: 600px) {
+    .contact-section {
+        padding: 3rem 1.25rem;
+    }
+
+    .contact-section h2 {
+        font-size: 2rem;
+    }
+
+    .contact-intro {
+        font-size: 1rem;
+        max-width: 100%;
+    }
+
+    .contact-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .contact-link {
+        width: 100%;
+        max-width: 320px;
+        align-items: center; /* center icon/label/value on mobile instead of left-aligned */
+        text-align: center;
+    }
+}
+/* Active nav link highlight (set by scroll-based JS) */
+.nav-links a.active-link {
+    color: #e2a062;
+}
+
+/* Scroll-reveal starting state + transition */
+.project-card,
+.skill-card {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* Scroll-reveal visible state (class added by JS when in view) */
+.project-card.reveal-visible,
+.skill-card.reveal-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
